@@ -1,1 +1,1 @@
-# cf_ai_journal_bot
+# cf-ai-journal-bot
