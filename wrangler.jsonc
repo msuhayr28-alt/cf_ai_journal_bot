@@ -1,0 +1,38 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cf-ai-journal-bot",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-10-24",
+
+  // Bind Workers AI so we can call the LLM
+  "ai": { "binding": "AI" },
+
+  // Durable Object binding for journal memory
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "JOURNAL_ROOM",
+        "class_name": "JournalRoom"
+      }
+    ]
+  },
+
+  // First migration to register the DO class
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_classes": ["JournalRoom"]
+    }
+  ],
+
+  // Static assets (your frontend lives in /public)
+  "assets": { "directory": "./public" },
+
+  "observability": { "enabled": true }
+
+  // "placement": { "mode": "smart" }
+}
